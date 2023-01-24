@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+
+    <div class="container px-2 py-2">
+        <br>
+        <h2 class="text-center display-5 fw-bold font-monospace fs-1 text-secondary-emphasis">Choose our products by category</h2>
+        <br>
+        <div class="row row-cols-1 row-cols-md-3 g-2 justify-content-md-center">
+            <% categories.forEach(function(category){ %>
+                <div class="col">
+                    <div class="card h-100 border-success bg-secondary-subtle">
+                        <img src="images/categories/<%= category.coverImage %>" class="card-img-top img-fluid category-img" alt="...">
+                        <div class="card-body">
+                            <h4 class="card-title text-secondary text-center"><%= category.name %></h4>
+                            <p class="card-title">Origin: <%= category.origin %></p>
+                            <p class="card-title">Description: <%= category.description %></p>
+                            <p class="card-title">Ratio: <%= category.cbdToThcRatio %></p>
+                            <p class="card-title">Effects: <%= category.effectsOfUse %></p>
+                            <p class="card-title">To use in: <%= category.periodOfUse %></p>
+                        </div>
+                        <a href="/products-by-categories/<%= category.slug %>" role="button" class="btn btn-success mx-3 mb-3">Products by <%= category.name%></a>
+                    </div>
+                </div>
+            <% })%>
+        </div>
+    </div>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

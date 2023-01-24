@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+
+    <div class="container px-4 py-5 text-secondary-emphasis" id="featured-3">
+        <h3 class="pb-2 border-bottom">Users review on <%= product.name%> </h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4 align-items-center">
+            <% product.reviews.forEach(function(review){ %>
+                <div class="col col-lg-4 h-100">
+                    <img src="/images/users/<%= review.user.photo %>" class="bd-placeholder-img rounded-circle review-img" alt="<%= review.user.name %>">
+                    <h4 class="fw-normal"><%= review.user.name%></h4>
+                    <p><%= review.content %></p>
+                    <div class="raview-rating dp-flex justify-content-around">
+                        <% const stars = [1,2,3,4,5]%>
+                        <% stars.forEach(function(star){ %>
+                            <svg class="review-star review-star-<%= review.rating > star ? 'active' : 'inactive' %>"><use xlink:href="/images/icons.svg#icon-star"></use> </svg>
+                        <% })%>
+                    </div>
+                </div>  
+            <% })%>
+        </div>
+    </div>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

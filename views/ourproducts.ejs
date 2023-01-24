@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+
+    <div class="container px-2 py-2">
+        <br>
+        <h2 class="text-center display-5 fw-bold font-monospace fs-1 text-secondary-emphasis">Our Products</h2>
+        <br>
+        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-md-center">
+            <% products.forEach(function(product){ %>
+                <div class="col">
+                    <div class="card h-100 border-success text-center">
+                        <div class="card-body">
+                        <h5 class="card-title text-secondary"><%= product.name %></h5>
+                        <h6 class="card-title text-secondary">Category: <%= product.category%></h6>
+                        <h6 class="card-title text-secondary">Price: <%= product.price%>€</h6>
+                        <a href="/product/<%= product.slug %>" type="button" class="btn btn-outline-success btn-sm border-success border-2">Details</a>
+                        </div>
+                        <img src="images/ganjas/<%= product.coverImage %>" class="card-img-bottom img-fluid" alt="...">
+                    </div>
+                </div>
+            <% })%>
+        </div>
+    </div>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

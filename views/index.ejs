@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+    <br>
+    <div class="p-2 mb-4 rounded-3">
+        <% if(page.slug === 'home'){ %>
+            <%- include('home') %>
+        <% } %>
+        <% if(page.slug === 'products'){ %>
+            <%- include('products') %>
+        <% } %>
+        <% if(page.slug === 'about') { %>
+            <%- include('about')%>
+        <% }%>
+        <% if(page.slug === 'services') { %>
+            <%- include('services')%>
+        <% }%>
+    </div>  
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>

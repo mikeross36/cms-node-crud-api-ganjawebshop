@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "name": "Sativa",
+        "origin": "Africa, Central America, Southeast Asia, and portions of Western Asia",
+        "description": "Plants are over 12 feet tall, with finger-like leaves. Takes longer to mature",
+        "cbdToThcRatio": "Lower doses of CBD and higher doses of THC",
+        "effectsOfUse": "mind high, energizing, anxiety-reducing",
+        "periodOfUse": "daytime",
+        "coverImage": "type-1.jpg",
+        "ganjas": ["63be8ca2de0d1edc630d87ab","63be8ca2de0d1edc630d87ac","63be8ca2de0d1edc630d87ad","63be8ca2de0d1edc630d87ae","63be8ca2de0d1edc630d87aa"]
+    },
+    {
+        "id": 2,
+        "name": "Indica",
+        "origin": "Afghanistan, India, Pakistan, and Turkey",
+        "description": "Plants are short and stocky with bushy greenery and chunky leaves, produces more buds",
+        "cbdToThcRatio": "Higher levels of CBD, but the THC content isn’t necessarily less",
+        "effectsOfUse": "intensely relaxing, reduce nausea, reduce pain, increase appetite",
+        "periodOfUse": "nighttime",
+        "coverImage": "type-2.jpg",
+        "ganjas": ["63be8ca2de0d1edc630d87af","63be8ca2de0d1edc630d87b2","63be8ca2de0d1edc630d87b3","63be8ca2de0d1edc630d87b0","63be8ca2de0d1edc630d87b1"]
+    },
+    {
+        "id": 3,
+        "name": "Hybrid ",
+        "origin": "Grown on farms or in greenhouses from a combination of sativa and indica strains",
+        "description": "The appearance of hybrid strains depends on the combination of the parent plants",
+        "cbdToThcRatio": "Each type has a unique ratio of the two cannabinoids",
+        "effectsOfUse": "reducing anxiety, reducing stress, easing symptoms of chemotherapy",
+        "periodOfUse": "depends on the predominant effects of the hybrid",
+        "coverImage": "type-3.jpg",
+        "ganjas": ["63be8ca2de0d1edc630d87b5","63be8ca2de0d1edc630d87b4","63be8ca2de0d1edc630d87b6","63be8ca2de0d1edc630d87b7","63be8ca2de0d1edc630d87b8"]
+    }
+]

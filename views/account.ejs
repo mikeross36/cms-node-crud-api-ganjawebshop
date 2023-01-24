@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+    <main class="form-signin m-auto">
+        <h2 class="text-secondary-emphasis mb-3"><%- title %></h2>
+        <br>
+        <form class="form-user-data">
+            <img class="mb-4" src="images/cannabis-logo-2.svg" alt="" width="72" height="57">
+            <h4 class="mb-3">Update data</h4>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" value="<%= user.name %>">
+                <label for="name">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" value="<%= user.email %>">
+                <label for="email">Email address</label>
+            </div>  
+            <div class="form-floating mb-3 d-flex align-items-center g-4">
+                <img src="images/users/<%= user.photo %>" class="img-fluid img-thumbnail account-img me-2" alt=" ">
+                <input type="file" id="photo" accept="image/*">
+                <label for="photo"></label>
+            </div>   
+            <button type="submit" class="btn btn-outline-success btn-lg px-4 me-md-2">Save</button>
+        </form>
+        <br>
+        <form class="form-user-password">
+            <img class="mb-4" src="images/cannabis-logo-2.svg" alt="" width="72" height="57">
+            <h4 class="mb-3">Update password</h4>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="login-password" placeholder="........">
+                <label for="login-password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder=".........">
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password-confirm" placeholder="........">
+                <label for="password-confirm">Password Confirm</label>
+            </div>       
+            <button type="submit" class="btn btn-outline-success btn-lg px-4 me-md-2 save-pass-btn">Save</button>
+        </form>
+        <br>
+        <% if(user.role === 'admin') { %>
+            <div class="container px-2 py-1 bg-body-tertiary">
+                <h3 class="my-2 text-center">Admin area</h3>
+                <img class="my-3" src="images/cannabis-logo-2.svg" alt="" width="72" height="57">
+                <h3 class="mb-1">Reorder pages</h3>
+                <br><br>
+                <table class="table table-striped sorting">
+                    <thead>
+                        <tr class="home">
+                            <th>Title</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sort-pages">
+                        <% pages.forEach(function(page){ %>
+                        <tr id="id_<%= page.id %>" class="<%= page.slug %>">
+                            <td><%= page.title %></td>
+                            <td><a href="update-page/<%= page.id %>">Edit</a></td>
+                            <% if (page.slug == "home") { %>
+                            <td></td>
+                            <% }  else {%>
+                            <td><a class="confirmDeletion" href="delete-page/<%= page.id %>">Delete</a></td>
+                            <% }%>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <a href="/add-page" role="button" class="btn btn-outline-success btn-lg px-4 me-md-2">Add new page</a>
+            </div>
+        <% }%>
+    </main>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+    <script>
+        $(document).ready(function() {
+           $("#sort-pages" ).sortable({
+                appendTo: document.body,
+                items: "tr:not('.home')",
+                placeholder: "highlight",
+                cursor: "move",
+                update: ()=> {
+                    var ids = $("#sort-pages").sortable("serialize");
+                    var url = "http://localhost:3000/pages/reorder-pages";
+                    var content = {contentType: "application/json"};
+                    $.ajax({
+                        data: ids,
+                        type: "POST",
+                        url: url,
+                        content: content
+                    })
+                }
+           });
+        });
+     </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

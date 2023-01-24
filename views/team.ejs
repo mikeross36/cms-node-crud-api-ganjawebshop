@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+    <br>
+    <div class="container px-2 py-2">
+        <h3 class="display-5 fw-bold text-secondary-emphasis">Our Team</h3>
+        <br>
+        <br>
+        <div class="row row-cols-1 row-cols-md-4 g-3 justify-content-md-center">
+            <% teamMembers.forEach(function(member){ %>
+                <div class="col">
+                    <div class="card h-100 border-success text-center px-2 py-2 bg-secondary-subtle">
+                        <img src="images/team-members/<%= member.photo %>" class="rounded-circle img-thumbnail shadow-sm member-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary"><%= member.name %></h5>
+                            <h6 class="card-title text-secondary"><%= member.position %></h6><img class="member-logo" src="images/cannabis-logo-2.svg" alt="">
+                            <h6 class="card-title text-secondary"><%= member.email %></h6>
+                        </div>
+                        <ul class="list-unstyled d-flex justify-content-center">
+                            <li class="ms-3"><a class="text-muted" href="https://twitter.com/" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="/images/icons.svg#icon-twitter"/></svg></a></li>
+                            <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="/images/icons.svg#icon-instagram"/></svg></a></li>
+                            <li class="ms-3"><a class="text-muted" href="https://www.facebook.com/" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="/images/icons.svg#icon-facebook"/></svg></a></li>
+                        </ul>
+                    </div>
+                </div>
+            <% })%>
+        </div>
+    </div>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+    <section class="light">
+        <div class="container py-2">
+            <div class="h2 text-center display-5 fw-bold lh-2 mb-3 text-secondary-emphasis">Explore our world</div>
+            <br>
+            <% podcasts.forEach(function(podcast){ %>
+                <article class="postcard light blue">
+                    <a class="postcard__img_link" href="#">
+                        <img class="postcard__img" src="/images/pages/<%= podcast.coverImage%>" alt="Image Title" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                        <h1 class="postcard__title blue"><a href="#"><%= podcast.title%></a></h1>
+                        <div class="postcard__subtitle small">
+                            <time datetime="2020-05-25 12:00:00"><%= podcast.createdAt.toLocaleString()%></time>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt"><%= podcast.content%></div>
+                        <ul class="postcard__tagbox">
+                            <li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
+                            <li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+                            <li class="tag__item play blue">
+                                <a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            <% })%>
+            
+            
+        </div>
+    </section>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('layouts/head'); %>
+    </head>
+    <body class="container">
+
+    <header>
+        <%- include('layouts/header'); %>
+    </header>
+
+    <main class="form-signin m-auto px-4">
+        <br>
+        <form class="register-form">
+            <img class="mb-4" src="images/cannabis-logo-2.svg" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Register to create account</h1>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="your name...">
+                <label for="name">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                <label for="email">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password-confirm" placeholder="confirm password">
+                <label for="password-confirm">Password Confirm</label>
+            </div>       
+            <button type="submit" class="btn btn-outline-success btn-lg px-4 me-md-2">Register</button>
+        </form>
+    </main>
+
+    <footer>
+        <%- include('layouts/footer'); %>
+    </footer>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

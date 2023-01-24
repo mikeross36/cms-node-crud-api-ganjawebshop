@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Jaydon Daniels",
+        "position": "Ganja Tester",
+        "email": "jaydon@gmail.com",
+        "photo": "team-member-1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Lilli Lang",
+        "position": "Ganja Tester",
+        "email": "lilli@gmail.com",
+        "photo": "team-member-2.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Samuel Page",
+        "position": "Ganja Tester",
+        "email": "samuel@gmail.com",
+        "photo": "team-member-3.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Amina Hilton",
+        "position": "Ganja Tester",
+        "email": "amina@gmail.com",
+        "photo": "team-member-4.jpg"
+    }
+]
