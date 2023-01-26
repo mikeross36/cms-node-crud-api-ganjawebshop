@@ -45,11 +45,22 @@ function $8961bee26f1e9538$export$78fa19ff5f750a4b() {
     };
 }
 function $8961bee26f1e9538$export$713257fe28b973f1() {
-    const addToCartForm = $8961bee26f1e9538$export$836aee6bce45247(".add-to-cart");
+    const addToCartBtn = $8961bee26f1e9538$export$836aee6bce45247("#add-to-cart-btn");
     return {
-        addToCartForm: addToCartForm
+        addToCartBtn: addToCartBtn
     };
 }
+function $8961bee26f1e9538$export$a6d1753478c403b6() {
+    const getCartBtn = $8961bee26f1e9538$export$836aee6bce45247("#get-cart-btn");
+    const clearCartBtn = $8961bee26f1e9538$export$836aee6bce45247("#clear-cart-btn");
+    const removeItemBtn = $8961bee26f1e9538$export$836aee6bce45247(".remove-item-btn");
+    return {
+        getCartBtn: getCartBtn,
+        clearCartBtn: clearCartBtn,
+        removeItemBtn: removeItemBtn
+    };
+}
+
 
 
 "use strict";
@@ -74,7 +85,6 @@ const $301bd54cd798ac64$export$5e5cfdaa6ca4292c = (type, message)=>{
         clearTimeout(timer);
     };
 };
-
 
 
 
@@ -154,24 +164,7 @@ const $d94b0862c8420463$export$a0973bcfe11b05c9 = async ()=>{
     } catch (error) {
         (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("danger", error.response.data.message);
     }
-}; // export const register = (name, email, password, passwordConfirm) => {
- //     const url = "/api/v1/users/register";
- //     const data = {
- //         name: name,
- //         email: email,
- //         password: password,
- //         passwordConfirm: passwordConfirm,
- //     };
- //     const customHeaders = { "Content-Type": "application/json" }
- //     fetch(url, {
- //         method: "POST",
- //         headers: customHeaders,
- //         body: JSON.stringify(data),
- //     })
- //         .then((response) => response.json())
- //         .then((data) => console.log(data))
- //         .catch((error) => console.error(error));
- // };
+};
 
 
 
@@ -275,7 +268,7 @@ const $9ef482370ee216ef$export$dc726c8e334dd814 = async (password, passwordConfi
 "use strict";
 const $efe4b63ddc0e541c$export$757c0bd9156f0e39 = async (rating, content, id)=>{
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/ganjas/${id}/reviews`, {
+        const response = await fetch(`/api/v1/ganjas/${id}/reviews`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -295,6 +288,72 @@ const $efe4b63ddc0e541c$export$757c0bd9156f0e39 = async (rating, content, id)=>{
 };
 
 
+
+"use strict";
+const $b3b5de9e8a91a101$export$576b6dd9d68b37bc = async (productId, quantity)=>{
+    try {
+        const response = await fetch("/api/v1/cart/add-to-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
+        });
+        const data = await response.json();
+        if (data.status === "success") (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("success", "Product added to cart!");
+    } catch (error) {
+        (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("danger", error.response.data.message);
+    }
+};
+const $b3b5de9e8a91a101$export$810121176e3e3671 = async ()=>{
+    try {
+        const response = await fetch("/api/v1/cart/clear-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await response.json();
+        if (data.status === "success") {
+            (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("success", "Cart is empty");
+            const timer = setTimeout(()=>{
+                location.assign("/");
+            }, 1500);
+            return ()=>{
+                clearTimeout(timer);
+            };
+        }
+        return data;
+    } catch (error) {
+        (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("danger", error.response.data.message);
+    }
+};
+const $b3b5de9e8a91a101$export$fe2d9b4e03920b4c = async (productId)=>{
+    try {
+        const response = await fetch("http://localhost:3000/api/v1/cart/remove-item", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                productId: productId
+            })
+        });
+        const data = await response.json();
+        if (data.status === "success") {
+            (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("success", "Item removed from cart");
+            location.reload(true);
+        }
+        return data;
+    } catch (error) {
+        (0, $301bd54cd798ac64$export$5e5cfdaa6ca4292c)("danger", error.response.data.message);
+    }
+};
+
+
 "use strict";
 const { registerForm: $719dd7005ed08b4f$var$registerForm  } = (0, $8961bee26f1e9538$export$f1b805ecdbe6565f)();
 const { loginForm: $719dd7005ed08b4f$var$loginForm , forgotForm: $719dd7005ed08b4f$var$forgotForm  } = (0, $8961bee26f1e9538$export$eadf1476937b6cd6)();
@@ -302,6 +361,8 @@ const { logoutBtn: $719dd7005ed08b4f$var$logoutBtn  } = (0, $8961bee26f1e9538$ex
 const { userDataForm: $719dd7005ed08b4f$var$userDataForm , userPasswordForm: $719dd7005ed08b4f$var$userPasswordForm , savePassBtn: $719dd7005ed08b4f$var$savePassBtn  } = (0, $8961bee26f1e9538$export$2ba628911d24e92f)();
 const { reviewForm: $719dd7005ed08b4f$var$reviewForm  } = (0, $8961bee26f1e9538$export$78fa19ff5f750a4b)();
 const { resetPassForm: $719dd7005ed08b4f$var$resetPassForm  } = (0, $8961bee26f1e9538$export$c28e67b98e828599)();
+const { addToCartBtn: $719dd7005ed08b4f$var$addToCartBtn  } = (0, $8961bee26f1e9538$export$713257fe28b973f1)();
+const { updateCartBtn: $719dd7005ed08b4f$var$updateCartBtn , clearCartBtn: $719dd7005ed08b4f$var$clearCartBtn , removeItemBtn: $719dd7005ed08b4f$var$removeItemBtn  } = (0, $8961bee26f1e9538$export$a6d1753478c403b6)();
 if ($719dd7005ed08b4f$var$registerForm) $719dd7005ed08b4f$var$registerForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     const name = (0, $8961bee26f1e9538$export$836aee6bce45247)("#name").value;
@@ -365,6 +426,30 @@ if ($719dd7005ed08b4f$var$reviewForm) $719dd7005ed08b4f$var$reviewForm.addEventL
     (0, $8961bee26f1e9538$export$836aee6bce45247)("#rating").value = "";
     (0, $8961bee26f1e9538$export$836aee6bce45247)("#content").value = "";
 });
+if ($719dd7005ed08b4f$var$addToCartBtn) $719dd7005ed08b4f$var$addToCartBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    const productId = $719dd7005ed08b4f$var$addToCartBtn.dataset.id;
+    const quantity = (0, $8961bee26f1e9538$export$836aee6bce45247)("#quantity").value;
+    (0, $b3b5de9e8a91a101$export$576b6dd9d68b37bc)(productId, quantity);
+});
+if ($719dd7005ed08b4f$var$clearCartBtn) $719dd7005ed08b4f$var$clearCartBtn.addEventListener("click", ()=>{
+    if (!window.confirm("Do you want to clear cart?")) return false;
+    (0, $b3b5de9e8a91a101$export$810121176e3e3671)();
+});
+if ($719dd7005ed08b4f$var$removeItemBtn) $719dd7005ed08b4f$var$removeItemBtn.addEventListener("click", ()=>{
+    const productId = $719dd7005ed08b4f$var$removeItemBtn.dataset.id;
+    (0, $b3b5de9e8a91a101$export$fe2d9b4e03920b4c)(productId);
+});
+ // if (updateCartBtn) {
+ //     updateCartBtn.addEventListener("click", e => {
+ //         e.preventDefault();
+ //         const productId = removeItemBtn.dataset.id;
+ //         const removeItemBtn = qs("#remove-item-btn")
+ //         if (e.target === removeItemBtn) {
+ //             removeFromCart(productId)
+ //         }
+ //     })
+ // };
 
 
 //# sourceMappingURL=main.js.map

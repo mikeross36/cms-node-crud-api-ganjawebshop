@@ -87,22 +87,4 @@ export const logout = async () => {
     }
 };
 
-// export const register = (name, email, password, passwordConfirm) => {
-//     const url = "/api/v1/users/register";
-//     const data = {
-//         name: name,
-//         email: email,
-//         password: password,
-//         passwordConfirm: passwordConfirm,
-//     };
-//     const customHeaders = { "Content-Type": "application/json" }
-    
-//     fetch(url, {
-//         method: "POST",
-//         headers: customHeaders,
-//         body: JSON.stringify(data),
-//     })
-//         .then((response) => response.json())
-//         .then((data) => console.log(data))
-//         .catch((error) => console.error(error));
-// };
+

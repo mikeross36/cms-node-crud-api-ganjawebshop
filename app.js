@@ -13,10 +13,8 @@ const bodyParser = require("body-parser")
 const ErrorResponse = require("./utils/ErorrResponse")
 const globalErrorHandler = require("./utils/globalErrorHandler")
 
-// app init
 const app = express()
 
-// view engine setup
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
@@ -49,12 +47,27 @@ const addPages = async () => {
     return new ErrorResponse(`${error}`, 500);
   }
 };
+
+const cartRepo = require("./utils/cartRepo")
+const addCart = async () => {
+  try {
+    const cart = await cartRepo.cart();
+    if (!cart) {
+      return new ErrorResponse("Cart not found", 404)
+    }
+    app.locals.cart = cart;
+  }
+  catch (error) {
+    return new ErrorResponse(`${error}`, 500)
+  }
+};
+
 app.use((req, res, next) => {
   addPages()
+  addCart()
   next()
 });
 
-// routes
 const viewsRouter = require("./routes/viewsRoutes")
 const pageRouter = require("./routes/pageRoutes")
 const userRouter = require("./routes/userRoutes")

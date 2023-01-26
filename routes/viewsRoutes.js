@@ -9,7 +9,7 @@ router.get("/register", viewsController.getRegisterForm)
 router.get("/forgot-password", viewsController.getForgotForm)
 router.get("/reset-password/:token", viewsController.getResetPassForm)
 
-router.get("/checkout",authController.tokenProtect, authController.isUserLoggedIn, viewsController.getCart)
+router.get("/checkout",authController.isUserLoggedIn, viewsController.getCart)
 
 router.get("/login", authController.isUserLoggedIn, viewsController.getLoginForm)
 router.get("/my-account", authController.tokenProtect, viewsController.getAccount)

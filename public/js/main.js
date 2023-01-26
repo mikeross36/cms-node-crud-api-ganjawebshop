@@ -1,10 +1,21 @@
 "use strict"
+import {
+  qs,
+  registerFormGlobals,
+  headerGlobals,
+  loginFormGlobals,
+  accountGlobals,
+  reviewFormGlobals,
+  resetFormGlobals,
+  productGlobals,
+  checkoutGlobals,
+} from "./utils";
 import { displayAlert } from "./alerts";
-import { qs, registerFormGlobals, headerGlobals, loginFormGlobals, accountGlobals, reviewFormGlobals, resetFormGlobals, productGlobals } from "./utils";
 import { register, logout, login,  } from "./registerLoginLogout";
 import { updateUserData, updateUserPassword } from "./updateSettings";
 import { forgotPassword, resetPassword } from "./forgotResetPassword";
 import { addReview } from "./addReview";
+import { addToCart, clearCart, removeItem } from "./cartFeatures";
 
 const { registerForm } = registerFormGlobals();
 const { loginForm, forgotForm } = loginFormGlobals();
@@ -12,6 +23,8 @@ const { logoutBtn } = headerGlobals();
 const { userDataForm, userPasswordForm, savePassBtn } = accountGlobals();
 const { reviewForm } = reviewFormGlobals();
 const { resetPassForm } = resetFormGlobals();
+const { addToCartBtn } = productGlobals();
+const { updateCartBtn, clearCartBtn, removeItemBtn } = checkoutGlobals();
 
 if (registerForm) {
     registerForm.addEventListener("submit", e => {
@@ -106,6 +119,42 @@ if (reviewForm) {
     })
 };
 
+if (addToCartBtn) {
+    addToCartBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const productId = addToCartBtn.dataset.id;
+        const quantity = qs("#quantity").value;
+
+        addToCart(productId, quantity)
+    })
+};
+
+if (clearCartBtn) {
+    clearCartBtn.addEventListener("click", () => {
+        if (!window.confirm("Do you want to clear cart?")) {
+            return false;
+        }
+        clearCart()
+    })
+};
+
+if (removeItemBtn) {
+    removeItemBtn.addEventListener("click", () => {
+        const productId = removeItemBtn.dataset.id;
+        removeItem(productId)
+    })
+}
+
+// if (updateCartBtn) {
+//     updateCartBtn.addEventListener("click", e => {
+//         e.preventDefault();
+//         const productId = removeItemBtn.dataset.id;
+//         const removeItemBtn = qs("#remove-item-btn")
+//         if (e.target === removeItemBtn) {
+//             removeFromCart(productId)
+//         }
+//     })
+// };
 
 
 

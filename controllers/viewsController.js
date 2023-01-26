@@ -9,6 +9,7 @@ const Podcast = require("./../models/podcastModel")
 const User = require("./../models/userModel")
 const Cart = require("./../models/cartModel")
 const crypto = require("crypto")
+const cartRepo = require("./../utils/cartRepo")
 
 exports.getIndexPage = handleAsync(async (req, res, next) => {
     const page = await Page.findOne({ slug: "home" })
@@ -171,13 +172,7 @@ exports.getAccount = (req, res) => {
 };
 
 exports.getCart = handleAsync(async (req, res, next) => {
-    const cart = await Cart.find().populate({
-        path: "items.productId",
-        select: "name price total"
-    })
-    if (!cart) {
-        return next(new ErrorResponse("Cart not found!", 404))
-    }
+    let cart = await cartRepo.cart();
     res.status(200).render("checkout", {
         title: "Your cart",
         cart: cart

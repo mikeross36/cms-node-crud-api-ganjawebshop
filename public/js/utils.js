@@ -38,6 +38,13 @@ export function reviewFormGlobals() {
 };
 
 export function productGlobals() {
-    const addToCartForm = qs(".add-to-cart")
-    return {addToCartForm}
+    const addToCartBtn = qs("#add-to-cart-btn")
+    return {addToCartBtn}
 };
+
+export function checkoutGlobals() {
+    const getCartBtn = qs("#get-cart-btn")
+    const clearCartBtn = qs("#clear-cart-btn")
+    const removeItemBtn = qs(".remove-item-btn")
+    return {getCartBtn, clearCartBtn, removeItemBtn}
+}

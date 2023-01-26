@@ -9,99 +9,91 @@
         <%- include('layouts/header'); %>
     </header>
     <br>
-    <main>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Cart Details</h2>
-                    <hr/>
-                    <% if (cart.length != 0) { %>
-                        <div class="cart-details">
-                            <div class="cart-title d-flex justify-content-around">
-                                <div>Image</div>
-                                <div>Product Name</div>
-                                <div>Quantity</div>
-                                <div>Price per Product</div>
-                                <div>Total Price</div>
-                                <div></div>
-                            </div>
-                            <% let totalPrice = 0; %>
-                            <% cart.forEach(function(item) { %>
-                                <div class="cart-product d-flex justify-content-around">
-                                    <div id="item-image"><%= item.coverImage %></div>
-                                    <div id="item-name"><%= item.name %></div>
-                                    <div id="item-quantity"><%= item.quantity %></div>
-                                    <div id="item-price"><%= item.price %>€</div>
-                                    <div id="item-total"><%= item.total %>€</div>
-                                    <div>
-                                        <a href="/cart/update/<%= item.title %>?action=add">+</a>&nbsp;
-                                        <a href="/cart/update/<%= item.title %>?action=remove">-</a>&nbsp;
-                                        <a href="/cart/update/<%= item.title %>?action=clear">Clear</a>&nbsp;
-                                    </div>
-                                </div>
-                                <% totalPrice += +item.total %>
-                            <% } ) %>
-                            <div class="text-end">
-                                <h3>TotalPrice: <%= parseFloat(totalPrice).toFixed(2) %> €</h3>
-                            </div>
+        <main>
+            <div class="container">
+                <% if (cart) { %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Cart Details</h2>
+                            <hr/>
+                            <table class="table alignmiddle table-borderless">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Product Price</th>
+                                    <th scope="col">Total Price</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <% let totalPrice = 0; %>
+                                    <% cart.items.forEach(function(product) { %>
+                                    <tr>
+                                        <td><img src="/images/ganjas/<%= product.coverImage %>" width="50" alt=""></td>
+                                        <td><%= product.productId.name %></td>
+                                        <td><%= product.quantity %></td>
+                                        <td><%= product.price %>€</td>
+                                        <td><%= product.total %>€</td>
+                                        <td>
+                                            <!-- <a class="mx-2" href="#" data-id="<%= product.id %>">+</a>
+                                            <a class="mx-2" href="#" data-id="<%= product.id %>">-</a>
+                                            <a href="#" id="remove-item" data-id="<%= product.id %>">Remove</a> -->
+                                        </td>
+                                    </tr>
+                                    <% totalPrice += +product.total %>
+                                    <% } ) %>
+                                    <tr>
+                                        <td colspan="6" align="right"><b>Total: </b> <%= parseFloat(totalPrice).toFixed(2) %> €</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" align="right">
+                                            <a role="button" id="clear-cart-btn" class="btn btn-danger" href="#">Clear cart</a>
+                                        </td>
+                                        <td colspan="5" align="right">
+                                            <a role="button" class="btn btn-primary buy-now" href="#">Buy now</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <form class="pp" action="https://www.paypal.com/us/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_cart">
+                                <input type="hidden" name="business" value="vladimir.monarov@gmail.com">
+                                <% let num = 0 %>
+                                <% cart.items.forEach(function(product) { %>
+                                    <% num++ %>
+                                    <input type="hidden" name="item_name_<%= num %>" value="<%= product.name %>">
+                                    <input type="hidden" name="amount_<%= num %>" value="<%= product.price %>">
+                                    <input type="hidden" name="quantity_<%= num %>" value="<%= product.quantity %>">
+                                <% })%>
+                                <input type="hidden" name="currency_code" value="EUR">
+                                <input type="hidden" name="amount">
+                                <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+                            </form>
                         </div>
-
-                        <div class="text-center my-3">
-                            <button class="btn btn-primar buy-now">Buy now</button>
-                        </div>
-                    <% } else { %>
-                        <div>No products in the cart</div>
-                    <% } %>
-                </div>
+                    </div>
+                <% } else { %>
+                    <div><h1>No products in the cart</h1></div>
+                <% } %>
             </div>
-        </div>
-    </main>
-   
-    <input type="hidden" name="cmd" value="_ext-enter">
-    <form class="pp" action="https://www.paypal.com/us/cgi-bin/webscr" method="post">
-        <input type="hidden" name="cmd" value="_cart">
-        <input type="hidden" name="business" value="vladimir.monarov@gmail.com">
-        <% let num = 0 %>
-        <% cart.forEach(function(item) { %>
-            <% num++ %>
-            <input type="hidden" name="item_name_<%= num %>" value="<%= item.name %>">
-            <input type="hidden" name="amount_<%= num %>" value="<%= item.price %>">
-            <input type="hidden" name="quantity_<%= num %>" value="<%= item.quantity %>">
-        <% })%>
-        <input type="hidden" name="currency_code" value="EUR">
-        <input type="hidden" name="amount">
-        <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-    </form>
-    <script>
-        const clearCart = () => {
-            const clearCartBtn = document.getElementById(".clear-cart-btn")
-            if(clearCartBtn){
-                clearCartBtn.addEventListener("click", ()=> {
-                    if(!window.confirm("Do you want to clear cart?")){
-                        return false
-                    }
-                });
+        </main>
+        <script>
+            const buyNow = () => {
+                const buyNowBtn = document.querySelector(".buy-now")
+                    if(buyNowBtn){
+                        buyNowBtn.addEventListener("click", e => {
+                        e.preventDefault()
+                        document.querySelector(".pp input[type=image]").click()
+                    })
+                }
             }
-        }
-        clearCart()
-
-        const buyNow = () => {
-            const buyNowBtn = document.querySelector(".buy-now")
-                if(buyNowBtn){
-                    buyNowBtn.addEventListener("click", e => {
-                    e.preventDefault()
-                    document.querySelector(".pp input[type=image]").click()
-                })
-            }
-        }
-        buyNow()
-        
-    </script>
-
-    <footer>
-        <%- include('layouts/footer'); %>
-    </footer>
-        
+            buyNow()
+            
+        </script>
+        <footer>
+            <%- include('layouts/footer'); %>
+        </footer>
     </body>
 </html>
 

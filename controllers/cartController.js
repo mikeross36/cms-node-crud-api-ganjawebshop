@@ -3,19 +3,9 @@ const handleAsync = require("./../utils/handleAsync.js")
 const ErrorResponse = require("./../utils/ErorrResponse")
 const Ganja = require("./../models/ganjaModel")
 const Cart = require("./../models/cartModel")
-
-function cartRepo() {
-    return async () => {
-        const carts = await Cart.find().populate({
-            path: "items.productId",
-            select: "name price total"
-        })
-        return carts[0]
-    }
-};
+const cartRepo = require("./../utils/cartRepo")
 
 exports.addItemToCart = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
     const { productId } = req.body;
     const quantity = +parseInt(req.body.quantity);
 
@@ -24,7 +14,7 @@ exports.addItemToCart = handleAsync(async (req, res, next) => {
         return next(new ErrorResponse("Product not found!", 404))
     }
 
-    let cart = await findCart();
+    let cart = await cartRepo.cart();
     if (cart) {
         const productIndex = cart.items.findIndex(item => {
             return item.productId.id === productId;
@@ -43,6 +33,7 @@ exports.addItemToCart = handleAsync(async (req, res, next) => {
             cartItem.total = cartItem.quantity * product.price;
             cartItem.price = product.price;
             cartItem.coverImage = product.coverImage;
+            cart.items[productIndex] = cartItem;
             cart.subTotal = cart.items.map(item => item.total).reduce((acc, curr) => acc + curr)
         }
         else if (quantity > 0) {
@@ -93,8 +84,7 @@ exports.addItemToCart = handleAsync(async (req, res, next) => {
 });
 
 exports.getCart = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
-    const cart = await findCart();
+    const cart = await cartRepo.cart();
     if (!cart) {
         return next(new ErrorResponse("Cart not found"))
     }
@@ -107,15 +97,40 @@ exports.getCart = handleAsync(async (req, res, next) => {
     })
 });
 
-exports.removeItemFromCart = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
+exports.updateCart = handleAsync(async (req, res, next) => {
     const { productId } = req.body;
-    const product = await Ganja.findById(productId)
-    if (!product) {
-        return next(new ErrorResponse("Product not found!", 404))
+    const action = req.quary.action;
+
+    const cart = await cartRepo.cart()
+    if (cart) {
+        const productIndex = cart.item.findIndex(item => {
+            return item.productId.id === productId;
+        })
+        if (productIndex !== -1) {
+            const cartItem = cart.items[productIndex]
+            switch (action) {
+                case "increase":
+                    cartItem.quantity++;
+                    break;
+                case "decrease":
+                    cartItem.quantity--;
+                    break;
+                case "remove":
+                    cart.items.splice(cartItem, 1);
+                    if (cart.items.length === 0) {
+                        await Cart.findByIdAndDelete(req.cart.id)
+                    }
+                    break;
+                default: console.log("Error ")
+            }
+        }
     }
+})
+
+exports.removeItemFromCart = handleAsync(async (req, res, next) => {
+    const { productId } = req.body;
     
-    let cart = await findCart();
+    let cart = await cartRepo.cart();
     if (cart) {
         const productIndex = cart.items.findIndex(item => {
             return item.productId.id === productId;
@@ -123,9 +138,8 @@ exports.removeItemFromCart = handleAsync(async (req, res, next) => {
         if (productIndex !== -1) {
             cart.items.splice(productIndex, 1)
             cart = await cart.save();
-    
             res.status(200).json({
-                status: "sucess",
+                status: "success",
                 data: {
                     cart: cart
                 }
@@ -135,18 +149,16 @@ exports.removeItemFromCart = handleAsync(async (req, res, next) => {
     else {
         return next(new ErrorResponse("Cart not found"))
     }
-    
 });
 
 exports.increaseQuantity = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
     const { productId } = req.body;
 
     const product = await Ganja.findById(productId);
     if (!product) {
         return next(new ErrorResponse("Product not found!", 404))
     }
-    let cart = await findCart();
+    let cart = await cartRepo.cart();
     if (cart) {
         const productIndex = cart.items.findIndex(item => {
             return item.productId.id === productId;
@@ -173,14 +185,13 @@ exports.increaseQuantity = handleAsync(async (req, res, next) => {
 });
 
 exports.decreaseQuantity = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
     const { productId } = req.body;
 
     const product = await Ganja.findById(productId)
     if (!product) {
         return next(new ErrorResponse("Product not found!", 404))
     }
-    let cart = await findCart()
+    let cart = await cartRepo.cart();
     if (cart) {
         const productIndex = cart.items.findIndex(item => {
             return item.productId.id === productId;
@@ -210,13 +221,12 @@ exports.decreaseQuantity = handleAsync(async (req, res, next) => {
     }
 });
 
-exports.emptyCart = handleAsync(async (req, res, next) => {
-    const findCart = cartRepo();
-    const cart = await findCart();
+exports.clearCart = handleAsync(async (req, res, next) => {
+    const cart = await cartRepo.cart();
     if (!cart) {
         return next(new ErrorResponse("Cart not found!", 404))
     }
-    const empty = async () => {
+    const clear = async () => {
         cart.items = []
         cart.subTotal = 0
         await cart.save()
@@ -229,7 +239,7 @@ exports.emptyCart = handleAsync(async (req, res, next) => {
             }
         })
     }
-    await empty();
+    await clear();
 });
 
 

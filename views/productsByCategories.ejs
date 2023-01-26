@@ -35,7 +35,8 @@
                         </div>
                     <% } else { %>
                         <div class="flex-shrink-1 my-2">
-                            <a href="/add-to-cart/<%= product.id %>" role="button" class="btn btn-outline-success flex-shrink-0 text-uppercase">add to cart</a>
+                            <a href="/add-to-cart" data-id="<%= product.id %>" id="add-to-cart-btn" role="button" class="btn btn-outline-success flex-shrink-0 text-uppercase">add to cart</a>
+                            <input type="hidden" value="1" id="quantity">
                         </div>
                         <div class="container px-2 py-2">
                             <form class="form-user-review">
