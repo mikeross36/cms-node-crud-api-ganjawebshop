@@ -21,9 +21,9 @@
                                 <div class="d-flex flex-column">
                                     <div><img src="/images/ganjas/<%= product.coverImage %>" width="80" alt=""></div>
                                     <h5 class="font-monospace bg-body-secondary"><%= product.productId.name %></h5>
-                                    <span class="fw-semibold">quantity: <%= product.quantity %></span>
-                                    <span class="fw-semibold">price: <%= product.price %>€</span>
-                                    <span class="fw-semibold">total: <%= product.total %>€</span>
+                                    <p align="right" class="pe-4 bg-body-secondary">quantity: <b><%= product.quantity %></b></p>
+                                    <p align="right" class="pe-4 bg-body-secondary">price: <b><%= product.price %>€</b></p>
+                                    <p align="right" class="pe-4 bg-body-secondary">total: <b><%= product.total %>€</b></p>
                                     <span>
                                         <!-- <a class="mx-2" href="#" data-id="<%= product.id %>">+</a>
                                         <a class="mx-2" href="#" data-id="<%= product.id %>">-</a>
@@ -33,7 +33,7 @@
                                 <% totalPrice += +product.total %>
                                 <% } ) %>
                                 <div class="my-2" align="right">
-                                    <span class="bg-body-secondary"><b>Total: <%= parseFloat(totalPrice).toFixed(2) %> €</b></span>
+                                    <span class="bg-body-secondary">Cart Total: <b><%= parseFloat(totalPrice).toFixed(2) %> €</b></span>
                                 </div>
                                 <div class="d-flex gap-2 justify-content-end flex-wrap">
                                     <div align="right">
