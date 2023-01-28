@@ -292,7 +292,7 @@ const $efe4b63ddc0e541c$export$757c0bd9156f0e39 = async (rating, content, id)=>{
 "use strict";
 const $b3b5de9e8a91a101$export$576b6dd9d68b37bc = async (productId, quantity)=>{
     try {
-        const response = await fetch("/api/v1/cart/add-to-cart", {
+        const response = await fetch("http://localhost:3000/api/v1/cart/add-to-cart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
