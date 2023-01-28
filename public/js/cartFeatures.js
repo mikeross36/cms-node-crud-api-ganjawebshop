@@ -3,7 +3,7 @@ import { displayAlert } from "./alerts"
 
 export const addToCart = async (productId, quantity) => {
     try {
-        const response = await fetch("http://localhost:3000/api/v1/cart/add-to-cart", {
+        const response = await fetch("/api/v1/cart/add-to-cart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
